@@ -2,28 +2,40 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 0 55px; 
 }
 
 .header {
-  font-weight: bold;
-  color: black;
   text-align: center;
-  
+  padding: 2px 0;
 }
-.logo-icon{
-  height: 40px;
+
+.logo-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
 }
+
+.logo-icon {
+  height: 40px; /* istediğin kadar büyütebilirsin */
+  width: auto;
+}
+
+
 .main-content {
   flex: 1;
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  gap: 10px;
+  padding: 5px;
 }
 
 .chat-section {
-  flex: 0 0 60%;
+  flex: 0 0 65%;
   display: flex;
   flex-direction: column;
+  border: 7px solid lightgray;
+  border-radius: 20px;
 }
 
 .side-panel {
@@ -31,7 +43,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: #f5f5f5;
+  background-color: white;
   padding: 15px;
   border-radius: 8px;
 }
@@ -40,7 +52,7 @@
   flex: 1;
   overflow-y: auto;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 20px;
   padding: 20px;
   margin-bottom: 15px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -54,39 +66,42 @@
 }
 
 .assistant-message {
-  background-color: #e3f2fd;
+  background-color: #FFEBEE;
   align-self: flex-start;
 }
 
 .user-message {
-  background-color: #2196F3;
+  background-color: #F44336;
   color: white;
   margin-left: auto;
 }
 
 .suggested-correction {
   font-size: 0.85em;
-  color: #c8e6c9;
+  color: #FFCDD2;
   margin-top: 5px;
   padding-left: 10px;
 }
 
 .input-container {
   display: flex;
-  gap: 10px;
-  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  width: 98%;
 }
 
 .message-input {
   flex: 1;
-  padding: 12px;
-  border: 2px solid #2196F3;
+  padding: 10px;
+  border: 2px solid #F44336;
   border-radius: 25px;
   outline: none;
 }
 
 .send-button {
-  background-color: #2196F3;
+  background-color: #F44336;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -96,24 +111,20 @@
 }
 
 .scenario-buttons {
-  /* Butonların bulunduğu kutu */
   background-color: white;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  
-  /* Hem başlığı hem de tabloyu ortalamak için */
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.scenario-buttons h3 {
-  margin-bottom: 15px;
+.scenario-table td {
+  padding: 10px;
 }
 
-/* Tabloyu ortalamak için */
 .scenario-table {
   margin: 0 auto;
   border-collapse: collapse;
@@ -125,38 +136,37 @@
 
 .center-buttons {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
 }
 
 .scenario-btn {
-  width: 120px;      /* İstediğiniz sabit genişlik */
-  height: 100px;     /* İstediğiniz sabit yükseklik */
-  border: 2px solid #2196F3;
+  width: 120px;
+  height: 100px;
+  border: 2px solid #F44336;
   border-radius: 25px;
   background-color: white;
-  color: #2196F3;
+  color: #F44336;
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5px; /* İsteğe bağlı, içerik ile kenarlar arasında boşluk oluşturur */
+  padding: 5px;
 }
 
 .scenario-btn:hover {
-  background-color: #2196F3;
+  background-color: #F44336;
   color: white;
 }
 
 .scenario-icon {
   width: 40px;
   height: 40px;
-  margin-bottom: 5px;
+  margin-bottom: 14px;
 }
 
-/* Voice Section */
 .voice-section {
   background-color: white;
   padding: 15px;
@@ -182,7 +192,7 @@
 .wave {
   width: 4px;
   height: 20px;
-  background-color: #2196F3;
+  background-color: #F44336;
   animation: wave 1s infinite ease-in-out;
   opacity: 0.5;
 }
@@ -206,7 +216,7 @@
   height: 50px;
   border-radius: 50%;
   border: none;
-  background-color: #2196F3;
+  background-color: #F44336;
   color: white;
   font-size: 20px;
   cursor: pointer;
@@ -214,6 +224,6 @@
 }
 
 .record-button.recording {
-  background-color: #f44336;
+  background-color: #B71C1C;
   transform: scale(1.1);
 }

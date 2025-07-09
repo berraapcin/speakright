@@ -1,21 +1,26 @@
+
+//backend/app.ts
 import express from 'express'
 import dotenv from 'dotenv'
 import { Clients } from './types'
 import { createResources } from './startup/createResources'
 import { createRoutes } from './startup/createRoutes'
 import cors from 'cors'
+import path from 'path'
 
 dotenv.config()
 
 const run = async () => {
   const app = express()
 
-  // ✅ CORS ayarı düzeltildi
   app.use(cors({
-    origin: 'http://localhost:3000', // Frontend'in doğru adresi
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }))
+
+app.use('/audio', express.static(path.join(__dirname, 'clients', 'audio')))
+
 
   const clients: Clients = await createResources()
 

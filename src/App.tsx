@@ -1,12 +1,5 @@
-// App.tsx
 import React, { useState } from "react";
 import "./App.css";
-import airplaneIcon from "./img/airplane.png";
-import hotelIcon from "./img/hotel.png";
-import interviewIcon from "./img/interview.png";
-import cutleryIcon from "./img/cutlery.png";
-import shoppingIcon from "./img/shopping-cart (2).png";
-import logo from "./img/logo.png";
 import axios from "axios";
 import VoiceChat from "./VoiceChat";
 import Header from "./components/Header";
@@ -19,29 +12,50 @@ const App: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState("");
   const [userMessage, setUserMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState<{ sender: string; text: string }[]>([]);
+  const [chatHistory, setChatHistory] = useState<
+    { sender: string; text: string; translation?: string }[]
+  >([]);
 
-  const speak = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "fr-FR"; // French voice
-    window.speechSynthesis.speak(utterance);
+  const playAudioFromPath = async (audioPath: string) => {
+    try {
+      const audio = new Audio(`http://localhost:3001/${audioPath}`);
+      await audio.play();
+      console.log("Playing audio:", audio.src);
+    } catch (e) {
+      console.error("Audio play error:", e);
+    }
   };
 
-  const handleScenarioClick = async (scenario: string) => {
+  const handleScenarioClick = (scenario: string) => {
     setSelectedScenario(scenario);
     setChatHistory([]);
     console.log(`Scenario selected: ${scenario}`);
+  };
+
+  const startConversation = async () => {
+    if (!selectedScenario) {
+      alert("Please select a scenario first.");
+      return;
+    }
 
     try {
       const response = await axios.post("http://localhost:3001/converse/text", {
-        scenarioName: scenario,
+        scenarioName: selectedScenario,
         text: "",
       });
 
-      const aiReply = response.data.frenchText || `Bonjour ! Scénario: ${scenario}`;
+const aiReply = response.data.frenchText || `Bonjour ! Scénario: ${selectedScenario}`;
+const translation = response.data.englishText;
+const audioPath = response.data.audioFilePath?.replace(/\\/g, "/");
 
-      setChatHistory([{ sender: "assistant", text: aiReply }]);
-      speak(aiReply);
+setChatHistory([{ sender: "assistant", text: aiReply, translation }]);
+
+
+      if (audioPath) {
+        await playAudioFromPath(audioPath);
+      } else {
+        console.warn("No audio path received from backend.");
+      }
     } catch (error) {
       console.error("Initial AI message error:", error);
       alert("Could not fetch AI message.");
@@ -64,44 +78,76 @@ const App: React.FC = () => {
 
       const aiFrench = response.data.frenchText;
       const aiEnglish = response.data.englishText;
+      const audioPath = response.data.audioFilePath?.replace(/\\/g, "/");
 
       setChatHistory((prev) => [
         ...prev,
-        { sender: "assistant", text: `🇫🇷 ${aiFrench}\n🇬🇧 ${aiEnglish}` },
+        { sender: "assistant", text: aiFrench, translation: aiEnglish },
       ]);
 
       setUserMessage("");
-      speak(aiFrench);
+
+      if (audioPath) {
+        await playAudioFromPath(audioPath);
+      } else {
+        console.warn("No audio path received for user message.");
+      }
     } catch (error) {
       console.error("Chat error:", error);
       alert("An error occurred while connecting to the AI.");
     }
   };
 
-  const handleNewVoiceMessage = (message: { user: string; aiFrench: string; aiEnglish: string; audio: string }) => {
+  const handleNewVoiceMessage = (message: {
+    user: string;
+    aiFrench: string;
+    aiEnglish: string;
+    audio: string;
+  }) => {
     setChatHistory((prev) => [
       ...prev,
       { sender: "user", text: message.user },
-      { sender: "assistant", text: `🇫🇷 ${message.aiFrench}\n🇬🇧 ${message.aiEnglish}` },
+      { sender: "assistant", text: message.aiFrench, translation: message.aiEnglish },
     ]);
 
-    speak(message.aiFrench);
+    try {
+      const audio = new Audio(`data:audio/mp3;base64,${message.audio}`);
+      audio.play().catch((e) => console.error("Voice audio error:", e));
+    } catch (e) {
+      console.error("Voice playback failed:", e);
+    }
+  };
+
+  const handleStartRolePlay = () => {
+    startConversation();
   };
 
   return (
-      <div className="container">
+    <div className="container">
       <Header />
       <div className="main-content">
         <div className="chat-section">
           <ChatHistory chatHistory={chatHistory} />
-          <MessageInput userMessage={userMessage} setUserMessage={setUserMessage} onSend={handleSendMessage} />
+          <MessageInput
+            userMessage={userMessage}
+            setUserMessage={setUserMessage}
+            onSend={handleSendMessage}
+          />
           {selectedScenario && (
-            <VoiceChat selectedScenario={selectedScenario} onNewMessage={handleNewVoiceMessage} isRecording={isRecording} />
+            <VoiceChat
+              selectedScenario={selectedScenario}
+              onNewMessage={handleNewVoiceMessage}
+              isRecording={isRecording}
+            />
           )}
         </div>
         <div className="side-panel">
           <ScenarioSelector onSelectScenario={handleScenarioClick} />
-          <VoiceSection isRecording={isRecording} toggleRecording={() => setIsRecording(!isRecording)} />
+          <VoiceSection
+            isRecording={isRecording}
+            toggleRecording={() => setIsRecording(!isRecording)}
+            startRolePlay={handleStartRolePlay}
+          />
         </div>
       </div>
     </div>

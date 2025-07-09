@@ -18,7 +18,7 @@ export class TranslationService {
 
     try {
       const response = await this.clients.deepseek.completion(messages)
-      return response // ✅ Artık response bir string
+      return response 
     } catch (error) {
       console.error('Error translating text:', error)
       throw new Error('Failed to translate text')

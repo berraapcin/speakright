@@ -1,3 +1,4 @@
+//MesaageInput.tsx
 import React from "react";
 
 interface Props {
@@ -13,10 +14,10 @@ const MessageInput: React.FC<Props> = ({ userMessage, setUserMessage, onSend }) 
       value={userMessage}
       onChange={(e) => setUserMessage(e.target.value)}
       className="message-input"
-      placeholder="Tapez ou parlez votre message..."
+      placeholder="Type or speak your message..."
     />
     <button className="send-button" onClick={onSend}>
-      Envoyer
+      Send
     </button>
   </div>
 );

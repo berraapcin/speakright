@@ -11,14 +11,14 @@ export class DeepseekClient {
 
     this.openai = new OpenAI({
       apiKey,
-      baseURL: 'https://openrouter.ai/api/v1', // OpenRouter endpoint
+      baseURL: 'https://openrouter.ai/api/v1',
     })
   }
 
   public async completion(messages: ChatCompletionMessageParam[]): Promise<string> {
     try {
       const response = await this.openai.chat.completions.create({
-        model: 'deepseek/deepseek-r1-0528:free', // 🔁 Ücretsiz model (gerekirse değiştir)
+        model: 'deepseek/deepseek-r1-0528:free', 
         messages,
       })
 
@@ -30,7 +30,6 @@ export class DeepseekClient {
 
       return reply
     } catch (error: any) {
-      // 🔍 Daha net ve açıklayıcı hata çıktısı
       console.error("❌ Deepseek API error:")
       if (error.response) {
         console.error("Status:", error.response.status)

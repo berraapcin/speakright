@@ -1,6 +1,5 @@
 
 //gTTS.ts
-
 import { existsSync, mkdirSync } from 'fs'
 // @ts-ignore
 import gTTS from 'gtts'
@@ -16,21 +15,22 @@ export class GTTSClient {
   public async convertTextToAudio(text: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const gtts = new gTTS(text, this.language)
-      const audioDir = join(__dirname, 'audio') // Use a valid directory path
-      const audioFilePath = join(audioDir, `${Date.now()}.mp3`) // Unique file name
 
-      // Create the audio directory if it doesn't exist
+      const audioDir = join(__dirname, 'audio')
+      const fileName = `${Date.now()}.mp3`
+      const fullPath = join(audioDir, fileName)
+
       if (!existsSync(audioDir)) {
         mkdirSync(audioDir, { recursive: true })
       }
 
-      gtts.save(audioFilePath, (err: any) => {
+      gtts.save(fullPath, (err: any) => {
         if (err) {
           console.error('Error converting text to audio:', err)
           reject(err)
         } else {
-          console.log('Audio file saved:', audioFilePath)
-          resolve(audioFilePath)
+          console.log('Audio file saved:', fullPath)
+          resolve(`audio/${fileName}`) 
         }
       })
     })

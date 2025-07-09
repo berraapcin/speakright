@@ -3,6 +3,7 @@ import React from "react";
 interface Message {
   sender: string;
   text: string;
+  translation?: string;
 }
 
 interface Props {
@@ -17,6 +18,9 @@ const ChatHistory: React.FC<Props> = ({ chatHistory }) => (
         className={`message ${msg.sender === "assistant" ? "assistant-message" : "user-message"}`}
       >
         <div className="message-text">{msg.text}</div>
+        {msg.sender === "assistant" && msg.translation && (
+          <div className="translation">Translation: {msg.translation}</div>
+        )}
       </div>
     ))}
   </div>

@@ -1,3 +1,4 @@
+
 //ConversationService.ts
 import { ScenarioFactory } from '../scenarios/ScenarioFactory'
 import { ChatCompletionMessageParam } from 'openai/resources'
@@ -20,24 +21,31 @@ export class ConversationService {
     return { text, translation, audioFilePath }
   }
 
- private conversationText = async (scenario: string, messages: ChatCompletionMessageParam[]) => {
-  const scenarioInstance = ScenarioFactory.createScenario(scenario)
-  const isConversationNew = messages.length === 0
-  const state = isConversationNew ? ScenarioStates.START : ScenarioStates.CONTINUE
+  private conversationText = async (scenario: string, messages: ChatCompletionMessageParam[]) => {
+    const scenarioInstance = ScenarioFactory.createScenario(scenario)
+    const isConversationNew = messages.length === 0
+    const state = isConversationNew ? ScenarioStates.START : ScenarioStates.CONTINUE
 
-  const systemPrompt = scenarioInstance.getSystemPrompt(state)
-  const systemMessage: ChatCompletionMessageParam = { role: 'system', content: systemPrompt }
-  const defaultUserMessage: ChatCompletionMessageParam = { role: 'user', content: 'Bonjour !' }
+    const systemPrompt = scenarioInstance.getSystemPrompt(state)
+    const systemMessage: ChatCompletionMessageParam = {
+      role: 'system',
+      content: systemPrompt
+    }
 
-  const conversationMessages = isConversationNew ? [systemMessage, defaultUserMessage] : [systemMessage, ...messages]
+    const defaultUserMessage: ChatCompletionMessageParam = {
+      role: 'user',
+      content: 'Bonjour !'
+    }
 
-  try {
-    // ✅ Artık sadece string döndüğü için doğrudan kullanıyoruz
-    const generatedText = await this.clients.deepseek.completion(conversationMessages)
-    return { text: generatedText }
-  } catch (error) {
-    throw new Error('Failed to generate response')
+    const conversationMessages = isConversationNew
+      ? [systemMessage, defaultUserMessage]
+      : [systemMessage, ...messages]
+
+    try {
+      const generatedText = await this.clients.deepseek.completion(conversationMessages)
+      return { text: generatedText }
+    } catch (error) {
+      throw new Error('Failed to generate response')
+    }
   }
-}
-
 }

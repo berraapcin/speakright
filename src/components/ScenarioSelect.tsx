@@ -1,19 +1,18 @@
+//ScenarioSelect.tsx
 import React from "react";
-
-interface Props {
-  onSelectScenario: (scenario: string) => void;
-}
-
 import hotelIcon from "../img/hotel.png";
 import interviewIcon from "../img/interview.png";
 import airplaneIcon from "../img/airplane.png";
 import cutleryIcon from "../img/cutlery.png";
 import shoppingIcon from "../img/shopping-cart (2).png";
 
+
+interface Props {
+  onSelectScenario: (scenario: string) => void;
+}
 const ScenarioSelect: React.FC<Props> = ({ onSelectScenario }) => {
   return (
     <div className="scenario-buttons">
-      <h3>Scénarios</h3>
       <table className="scenario-table">
         <tbody>
           <tr>

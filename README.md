@@ -21,7 +21,7 @@
 
 Here’s what the interface looks like:
 
-![SpeakRight Preview](./img/speakright-preview.png)
+![SpeakRight Preview](./src/img/speakright-preview.png)
 
 ---
 

@@ -1,46 +1,77 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SpeakRight
 
-## Available Scripts
+**SpeakRight** is an AI-powered language learning app that helps users practice French through interactive roleplay. Whether you're preparing for a hotel check-in, a job interview, or ordering at a restaurant, SpeakRight allows you to simulate real-life conversations with AI in both voice and text format.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-  **Scenario Selection**: Choose from real-life scenarios like hotel check-in, job interview, airport, restaurant, and more.
+-  **Start Role Play**: Once you select a scenario and click "Start Role Play", the AI responds **with voice** and **text**.
+-  **Chat Interface**: All AI responses are displayed in the chat window along with their **English translations** underneath.
+-  **Voice Interaction**: Speak to the AI using your microphone.
+- **Text-Based Messaging**: Prefer typing? You can send text messages instead of using your voice.
+-  **Audio Playback**: AI responses are also played aloud using text-to-speech.
+-  **Multimodal Support**: Voice input and typed input are both supported and flexible.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## Preview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Here’s what the interface looks like:
 
-### `npm run build`
+![SpeakRight Preview](./img/speakright-preview.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧰 Technologies Used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Frontend**: React + TypeScript
+- **Backend**: Node.js + Express + TypeScript
+- **AI/LLM API**: OpenRouter API (DeepSeek model)
+- **Text-to-Speech**: gTTS or AssemblyAI
+- **Translation**: Integrated French–English responses
+- **Env Config**: dotenv for API keys & environment management
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Getting Started
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 1. Clone the repository
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+git clone https://github.com/yourusername/speakright.git
+cd speakright
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 2. Install dependencies (backend)
 
-## Learn More
+```bash
+cd backend
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3. Run the development server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run dev
+```
+
+---
+
+## Usage Flow
+
+1. **Select a Scenario**  
+   Choose one of the predefined scenarios from the right panel.
+
+2. **Click "Start Role Play"**  
+   The AI greets you in French, and the greeting is displayed in the chat with its English translation below. The audio of the response is also played.
+
+3. **Continue Conversation**  
+   - You can **talk using your microphone**, and the AI will respond in French with translation and voice.
+   - Or, you can **type your message** and click **Send**. The AI will respond just like in the voice mode.
+
+---
+
+
